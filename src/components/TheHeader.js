@@ -4,15 +4,15 @@ import {theStyle} from '../stylesheets/Stylesheet';
 
 const TheHeader = () => {
   return (
-    <View style={[styles.flex, styles.space]}>
+    <View style={[styles.flex, styles.space, styles.header]}>
       {/* heading */}
-      <View style={[styles.padding]}>
-        <Text style={theStyle.headingSize}>Heading</Text>
+      <View style={[theStyle.padding]}>
+        <Text style={theStyle.h3}>Chat app Design</Text>
       </View>
       {/* icons */}
-      <View style={[styles.padding, styles.flex, styles.center]}>
-        <Text style={[styles.padding]}>ICON 1</Text>
-        <Text style={[styles.padding]}>ICON 2</Text>
+      <View style={[theStyle.padding, styles.flex, styles.center]}>
+        <Text style={[theStyle.padding]}>ICON 1</Text>
+        <Text style={[theStyle.padding]}>ICON 2</Text>
       </View>
     </View>
   );
@@ -29,10 +29,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  padding: {
-    padding: 5,
-  },
+
   space: {
     justifyContent: 'space-between',
+  },
+  header: {
+    height: 50,
+    alignItems: 'center',
+    backgroundColor: '#a8dadc',
+    // shadow
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.17,
+    shadowRadius: 3.05,
+    elevation: 20,
   },
 });

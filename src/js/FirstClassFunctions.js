@@ -8,11 +8,11 @@ let asad = () => {
 console.log('Question: Who are you?');
 console.log('Answer: ', asad()); //passing function as argument like a variable
 
+// output
+// Question: Who are you?
+// Answer: Hello, i am Asad
+
 // capabilities of First Class Functions
 // 1. use function as a variable
 // 2. it can be passed as a parameter
 // 3. it can also take arguments
-
-// output
-// Question: Who are you?
-// Answer: Hello, i am Asad

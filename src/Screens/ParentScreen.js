@@ -15,7 +15,9 @@ const ParentScreen = () => {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Chats"
+        backBehavior="initialRoute"
         tabBarPosition="bottom"
+        // orientation="vertical"
         screenOptions={{
           //   tabBarShowIcon: true,
           tabBarLabelStyle: {fontSize: 10},

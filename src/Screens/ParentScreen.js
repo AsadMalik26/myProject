@@ -8,6 +8,8 @@ import Calls from './parent-screens/Calls';
 import Camera from './parent-screens/Camera';
 import Chats from './parent-screens/Chats';
 import SettingsScreen from './parent-screens/SettingsScreen';
+import ChildScreen from './ChildScreen';
+import ChatScreen from './child-screens/ChatScreen';
 const Tab = createMaterialTopTabNavigator();
 
 const ParentScreen = () => {
@@ -27,6 +29,12 @@ const ParentScreen = () => {
         <Tab.Screen name="Status" component={Status} />
         <Tab.Screen name="Calls" component={Calls} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{title: 'Chat'}}
+        />
+        {/* <Tab.Screen name="testing" component={ChildScreen} /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );

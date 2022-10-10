@@ -1,10 +1,10 @@
 // import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {theStyle} from '../../../stylesheets/Stylesheet';
 
 const ChatCard = ({name, message, count}) => {
   return (
-    <View style={[theStyle.padding, theStyle.flexRow]}>
+    <TouchableOpacity style={[theStyle.padding, theStyle.flexRow]}>
       {/* picture */}
       <Image
         source={require('../../../../assets/images/sample-dp.jpg')}
@@ -23,7 +23,7 @@ const ChatCard = ({name, message, count}) => {
           <Text style={styles.notifyFont}>{count}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

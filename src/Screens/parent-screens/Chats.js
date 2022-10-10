@@ -3,7 +3,10 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {theStyle} from '../../stylesheets/Stylesheet';
 import ChatCard from './components/ChatCard';
 import {chat} from './components/dataset';
+import {createStackNavigator} from '@react-navigation/stack';
 state = true;
+const Stack = createStackNavigator();
+
 const Chats = () => {
   const [chatList, setChatList] = useState(chat);
   // const [render, setRender] = useState('hello');
@@ -13,6 +16,7 @@ const Chats = () => {
     // abc [erform re rendering]
   }, ['abc']);
   return (
+    // <Stack.Navigator>
     <View style={[theStyle.flex]}>
       <FlatList
         data={chatList}
@@ -26,6 +30,7 @@ const Chats = () => {
         )}
       />
     </View>
+    // {/* </Stack.Navigator> */}
   );
 };
 

@@ -12,6 +12,7 @@ import {theStyle} from '../../stylesheets/Stylesheet';
 import send from '../../../assets/images/send.png';
 import pic from '../../../assets/images/sample-dp.jpg';
 import play from '../../../assets/images/play-fill.png';
+import microphone from '../../../assets/images/microphone.png';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {GiftedChatUI} from '../gifted-chat/GiftedChatUI';
 
@@ -73,6 +74,26 @@ const ChatScreen = ({navigation, route}) => {
             }}>
             <Image
               source={send}
+              style={{
+                width: 30,
+                height: 30,
+                aspectRatio: 1 / 1,
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              //   backgroundColor: 'red',
+              aspectRatio: 1 / 1,
+              borderRadius: 50,
+              padding: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={microphone}
               style={{
                 width: 30,
                 height: 30,
@@ -150,10 +171,15 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     paddingHorizontal: 10,
   },
-  button: {width: '25%', justifyContent: 'center', alignItems: 'center'},
+  button: {
+    width: '25%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   send: {backgroundColor: '#bde0fe', borderRadius: 50, marginHorizontal: 5},
   sendIcon: {},
-  //   voice
+  //   voice message
   voice: {
     flexDirection: 'row',
     width: '70%',

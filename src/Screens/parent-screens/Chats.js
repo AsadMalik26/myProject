@@ -7,6 +7,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 state = true;
 const Stack = createStackNavigator();
 
+import {AskAudioPermissions} from '../../utils/AudioPermissions';
+AskAudioPermissions();
 const Chats = ({navigation, route}) => {
   // console.log('Chats-----Navigation ===========> ', navigation);
   console.log('Route--Child>Chats===========> ', route);

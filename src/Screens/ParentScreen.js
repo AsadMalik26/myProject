@@ -10,6 +10,7 @@ import Chats from './parent-screens/Chats';
 import SettingsScreen from './parent-screens/SettingsScreen';
 import ChildScreen from './ChildScreen';
 import ChatScreen from './child-screens/ChatScreen';
+import {GiftedChatUI} from './gifted-chat/GiftedChatUI';
 const Tab = createMaterialTopTabNavigator();
 
 const ParentScreen = () => {
@@ -29,6 +30,7 @@ const ParentScreen = () => {
         <Tab.Screen name="Status" component={Status} />
         <Tab.Screen name="Calls" component={Calls} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Gift" component={GiftedChatUI} />
         <Tab.Screen
           name="ChatScreen"
           component={ChatScreen}

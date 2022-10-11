@@ -12,6 +12,8 @@ import {theStyle} from '../../stylesheets/Stylesheet';
 import send from '../../../assets/images/send.png';
 import pic from '../../../assets/images/sample-dp.jpg';
 import play from '../../../assets/images/play-fill.png';
+import {GiftedChat} from 'react-native-gifted-chat';
+import {GiftedChatUI} from '../gifted-chat/GiftedChatUI';
 
 const ChatScreen = () => {
   return (
@@ -43,6 +45,7 @@ const ChatScreen = () => {
           </View>
         </View>
         {/* end voice message */}
+        <View info="Gifted Chat">{/* <GiftedChatUI /> */}</View>
       </View>
       {/* end 1 */}
 

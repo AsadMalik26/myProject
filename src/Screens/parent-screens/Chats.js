@@ -7,7 +7,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 state = true;
 const Stack = createStackNavigator();
 
-const Chats = () => {
+const Chats = ({navigation, route}) => {
+  // console.log('Chats-----Navigation ===========> ', navigation);
+  console.log('Route--Child>Chats===========> ', route);
   const [chatList, setChatList] = useState(chat);
   // const [render, setRender] = useState('hello');
   useEffect(() => {
@@ -26,6 +28,7 @@ const Chats = () => {
             message={item.message}
             count={Math.floor(Math.random() * 30)}
             key={index}
+            navigation={navigation}
           />
         )}
       />

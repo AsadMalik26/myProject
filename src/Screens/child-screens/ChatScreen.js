@@ -15,7 +15,8 @@ import play from '../../../assets/images/play-fill.png';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {GiftedChatUI} from '../gifted-chat/GiftedChatUI';
 
-const ChatScreen = () => {
+const ChatScreen = ({navigation, route}) => {
+  console.log('Route--ChatScreen----------> ', route);
   return (
     <View style={[theStyle.flex]}>
       <View info="1. chat display" style={[styles.chatArea]}>

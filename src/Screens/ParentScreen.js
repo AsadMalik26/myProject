@@ -26,16 +26,17 @@ const ParentScreen = () => {
           tabBarLabelStyle: {fontSize: 10},
         }}>
         <Tab.Screen name="Camera" component={Camera} />
-        <Tab.Screen name="Chats" component={Chats} />
+        {/* <Tab.Screen name="Chats" component={Chats} /> */}
+        <Tab.Screen name="Child" component={ChildScreen} />
         <Tab.Screen name="Status" component={Status} />
         <Tab.Screen name="Calls" component={Calls} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
         <Tab.Screen name="Gift" component={GiftedChatUI} />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="ChatScreen"
           component={ChatScreen}
           options={{title: 'Chat'}}
-        />
+        /> */}
         {/* <Tab.Screen name="testing" component={ChildScreen} /> */}
       </Tab.Navigator>
     </NavigationContainer>

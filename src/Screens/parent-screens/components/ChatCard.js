@@ -2,9 +2,12 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {theStyle} from '../../../stylesheets/Stylesheet';
 
-const ChatCard = ({name, message, count}) => {
+const ChatCard = ({name, message, count, navigation}) => {
+  // console.log('navigation==========> ', navigation);
   return (
-    <TouchableOpacity style={[theStyle.padding, theStyle.flexRow]}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('testChat', {name: name})}
+      style={[theStyle.padding, theStyle.flexRow]}>
       {/* picture */}
       <Image
         source={require('../../../../assets/images/sample-dp.jpg')}

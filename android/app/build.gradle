@@ -249,6 +249,10 @@ android {
 }
 
 dependencies {
+    // asad voice recorder
+    // compile project(':react-native-audio-recorder-player')
+    implementation project(':react-native-audio-recorder-player')
+    // end asad voice recorder
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion

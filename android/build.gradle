@@ -3,10 +3,17 @@
 buildscript {
     ext {
         buildToolsVersion = "31.0.0"
-        minSdkVersion = 21
+        // minSdkVersion = 21
+        // asad voice recorder
+        // Note: Below change is necessary for pause / resume audio feature. Not for Kotlin.
+        minSdkVersion = 24
+        // end asad voice recorder
+
         compileSdkVersion = 31
         targetSdkVersion = 31
-
+        // asad voice recorder
+        kotlinVersion = '1.5.0'
+        // end asad voice recorder
         if (System.properties['os.arch'] == "aarch64") {
             // For M1 Users we need to use the NDK 24 which added support for aarch64
             ndkVersion = "24.0.8215888"
@@ -25,6 +32,10 @@ buildscript {
         classpath("de.undercouch:gradle-download-task:5.0.1")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+
+        // asad voice recorder
+        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        // end asad voice recorder
     }
 }
 

@@ -1,5 +1,9 @@
 package com.myproject;
 
+// asad voice recorder
+import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage;
+// end asad voice recorder
+
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -26,6 +30,11 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
+          
+          // asad voice recorder
+          // packages.add(new RNAudioRecorderPlayerPackage());
+          // end asad voice recorder
+
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;

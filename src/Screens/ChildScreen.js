@@ -10,7 +10,7 @@ function Test({navigation}) {
   </View>;
 }
 const ChildScreen = ({navigation, route}) => {
-  console.log('Route Child-Screen=============> ', route);
+  // console.log('Route Child-Screen=============> ', route);
   return (
     <Stack.Navigator screenOptions={{headerShown: true}}>
       <Stack.Screen

@@ -1,4 +1,5 @@
 import {
+  FlatList,
   Image,
   StyleSheet,
   Text,
@@ -6,47 +7,56 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {theStyle} from '../../stylesheets/Stylesheet';
 // icons img
 import send from '../../../assets/images/send.png';
-import pic from '../../../assets/images/sample-dp.jpg';
-import play from '../../../assets/images/play-fill.png';
+
 import microphone from '../../../assets/images/microphone.png';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {GiftedChatUI} from '../gifted-chat/GiftedChatUI';
+import VoiceMessageReceived from '../parent-screens/components/VoiceMessageReceived';
+import ChatBubbleReceived from '../parent-screens/components/ChatBubbleReceived';
+import ChatBubbleSent from '../parent-screens/components/ChatBubbleSent';
+import {dummyMessages} from '../dataset';
+import VoiceMessageSent from '../parent-screens/components/VoiceMessageSent';
+
+const render = ({item, index}) => {
+  if (item?.messageStatus === 'RECEIVED' && item?.messageType === 'TEXT') {
+    console.log('Text Recived');
+    return <ChatBubbleReceived />;
+  } else if (
+    item?.messageStatus === 'RECEIVED' &&
+    item?.messageType === 'VOICE'
+  ) {
+    console.log('VOICE Recived');
+    return <VoiceMessageReceived />;
+  } else if (item?.messageStatus === 'SENT' && item?.messageType === 'TEXT') {
+    console.log('Text SENT');
+    return <ChatBubbleSent />;
+  } else if (item?.messageStatus === 'SENT' && item?.messageType === 'VOICE') {
+    console.log('VOICE SENT');
+    return <VoiceMessageSent />;
+  } else
+    console.log(
+      'Case not handled mate',
+      item?.messageStatus,
+      item?.messageType,
+    );
+};
 
 const ChatScreen = ({navigation, route}) => {
-  console.log('Route--ChatScreen----------> ', route);
+  // console.log('Route--ChatScreen----------> ', route);
+  const [messages, setMessages] = useState(dummyMessages);
   return (
     <View style={[theStyle.flex]}>
       <View info="1. chat display" style={[styles.chatArea]}>
-        <View
-          info="1.1 Bubble received"
-          style={[styles.bubble, styles.received]}>
-          <Text style={styles.senderName}>Sender Name</Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque porro
-            id obcaecati, dolorem laudantium cupiditate incidunt,
-          </Text>
-          <View info="reciver tip" style={[styles.receiveTip, {}]}></View>
-        </View>
-        <View info="1.2 Bubble sent" style={[styles.bubble, styles.sent]}>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque porro
-            id obcaecati, dolorem laudantium cupiditate incidunt,
-          </Text>
-          <View info="sent tip" style={[styles.sentTip, {}]}></View>
-        </View>
-        {/* voice message */}
-        <View info="voice box" style={styles.voice}>
-          <Image source={pic} style={styles.img} />
-          <Image source={play} style={styles.voicePlayButton} />
-          <View info="voice-timeline" style={styles.voiceTimeline}>
-            <View info="playing-tip" style={styles.playingTip}></View>
-          </View>
-        </View>
-        {/* end voice message */}
+        <FlatList
+          data={messages}
+          // renderItem={({item, index}) => console.log('Hello messages')}
+          renderItem={render}
+        />
+
         <View info="Gifted Chat">{/* <GiftedChatUI /> */}</View>
       </View>
       {/* end 1 */}
@@ -62,6 +72,7 @@ const ChatScreen = ({navigation, route}) => {
         {/* </View> */}
         <View info="buttons" style={[styles.button, styles.send]}>
           <TouchableOpacity
+            info="send button"
             style={{
               width: 40,
               height: 40,
@@ -82,6 +93,7 @@ const ChatScreen = ({navigation, route}) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            info="microphone"
             style={{
               width: 40,
               height: 40,
@@ -112,55 +124,14 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   // 1
   chatArea: {flex: 1},
-  bubble: {
-    width: '70%',
-    marginTop: 5,
-    padding: 5,
-    borderRadius: 13,
 
-    position: 'relative',
-  },
-  receiveTip: {
-    position: 'absolute',
-    backgroundColor: '#2a9d8f70',
-    width: 5,
-    height: 7,
-    bottom: -4,
-    left: -3,
-    transform: [{rotate: '45deg'}],
-    // borderWidth: 1,
-    borderBottomEndRadius: 20,
-  },
-  sentTip: {
-    position: 'absolute',
-    backgroundColor: '#bde0fe60',
-    width: 5,
-    height: 7,
-    bottom: -4,
-    right: -3,
-    transform: [{rotate: '-45deg'}],
-    // borderWidth: 1,
-    borderBottomStartRadius: 20,
-  },
-  received: {
-    backgroundColor: '#2a9d8f50',
-    marginLeft: 5,
-    borderBottomLeftRadius: 0,
-    alignSelf: 'flex-start',
-  },
-  sent: {
-    backgroundColor: '#bde0fe60',
-    marginRight: 5,
-    borderBottomRightRadius: 0,
-    alignSelf: 'flex-end',
-  },
-  senderName: {fontWeight: 'bold', textDecorationLine: 'underline'},
   // 2
   opArea: {
     height: 45,
     flexDirection: 'row',
     marginHorizontal: 2,
     justifyContent: 'space-evenly',
+    marginTop: 5,
     // minHeight: 45,
   },
   input: {
@@ -179,47 +150,4 @@ const styles = StyleSheet.create({
   },
   send: {backgroundColor: '#bde0fe', borderRadius: 50, marginHorizontal: 5},
   sendIcon: {},
-  //   voice message
-  voice: {
-    flexDirection: 'row',
-    width: '70%',
-    marginTop: 5,
-    marginLeft: 5,
-    padding: 5,
-    height: 55,
-    backgroundColor: '#2a9d8f70',
-    borderRadius: 13,
-    alignItems: 'center',
-  },
-  img: {
-    width: 45,
-    height: 45,
-    aspectRatio: 1 / 1,
-    borderWidth: 1,
-    borderRadius: 50,
-  },
-  voicePlayButton: {
-    width: 30,
-    height: 30,
-    // backgroundColor: 'black',
-    // marginLeft: 5,
-    aspectRatio: 1 / 1,
-  },
-  voiceTimeline: {
-    // width: '100%',
-    flex: 1,
-    borderRadius: 1,
-    backgroundColor: '#219ebc',
-    height: 3,
-    marginHorizontal: 5,
-    position: 'relative',
-  },
-  playingTip: {
-    width: 7,
-    height: 7,
-    bottom: 2,
-    borderRadius: 5,
-    position: 'relative',
-    backgroundColor: 'red',
-  },
 });

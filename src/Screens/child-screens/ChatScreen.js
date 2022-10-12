@@ -1,4 +1,5 @@
 import {
+  Alert,
   FlatList,
   Image,
   StyleSheet,
@@ -48,6 +49,21 @@ const render = ({item, index}) => {
 const ChatScreen = ({navigation, route}) => {
   // console.log('Route--ChatScreen----------> ', route);
   const [messages, setMessages] = useState(dummyMessages);
+  const sendMessage = () => {
+    setMessages([
+      ...messages,
+      {
+        messageStatus: 'SENT',
+        messageType: 'TEXT',
+        messages:
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque porro idobcaecati, dolorem laudantium cupiditate incidunt,',
+      },
+    ]);
+    console.log('Send Message');
+  };
+  const receiveMessage = () => {
+    console.log('Recieve Message');
+  };
   return (
     <View style={[theStyle.flex]}>
       <View info="1. chat display" style={[styles.chatArea]}>
@@ -73,6 +89,7 @@ const ChatScreen = ({navigation, route}) => {
         <View info="buttons" style={[styles.button, styles.send]}>
           <TouchableOpacity
             info="send button"
+            onPress={sendMessage}
             style={{
               width: 40,
               height: 40,

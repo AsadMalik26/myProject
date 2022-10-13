@@ -7,6 +7,8 @@ export const AskAudioPermissions = async () => {
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+        // PermissionsAndroid.PERMISSIONS.ACCESS_MEDIA_LOCATION,
+        // PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO,
       ]);
 
       console.log('write external stroage', grants);
@@ -18,6 +20,11 @@ export const AskAudioPermissions = async () => {
           PermissionsAndroid.RESULTS.GRANTED &&
         grants['android.permission.RECORD_AUDIO'] ===
           PermissionsAndroid.RESULTS.GRANTED
+        //   &&
+        // grants['android.permission.ACCESS_MEDIA_LOCATION'] ===
+        //   PermissionsAndroid.RESULTS.GRANTED &&
+        // grants['android.permission.READ_MEDIA_AUDIO'] ===
+        //   PermissionsAndroid.RESULTS.GRANTED
       ) {
         console.log('Permissions granted');
       } else {

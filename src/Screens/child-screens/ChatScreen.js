@@ -2,6 +2,7 @@ import {
   Alert,
   FlatList,
   Image,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -19,24 +20,36 @@ import {GiftedChatUI} from '../gifted-chat/GiftedChatUI';
 import VoiceMessageReceived from '../parent-screens/components/VoiceMessageReceived';
 import ChatBubbleReceived from '../parent-screens/components/ChatBubbleReceived';
 import ChatBubbleSent from '../parent-screens/components/ChatBubbleSent';
-import {dummyMessages} from '../dataset';
 import VoiceMessageSent from '../parent-screens/components/VoiceMessageSent';
+import {dummyMessages} from '../dataset';
+// audio setup
+import AudioRecorderPlayer, {
+  AudioEncoderAndroidType,
+  AudioSourceAndroidType,
+  AVModeIOSOption,
+  AVEncoderAudioQualityIOSType,
+  AVEncodingOption,
+  OutputFormatAndroidType,
+} from 'react-native-audio-recorder-player';
+const audioRecorderPlayer = new AudioRecorderPlayer();
+audioRecorderPlayer.setSubscriptionDuration(0.09);
+// everytime error when path used for recording
 
 const render = ({item, index}) => {
   if (item?.messageStatus === 'RECEIVED' && item?.messageType === 'TEXT') {
-    console.log('Text Recived');
+    // console.log('Text Recived');
     return <ChatBubbleReceived />;
   } else if (
     item?.messageStatus === 'RECEIVED' &&
     item?.messageType === 'VOICE'
   ) {
-    console.log('VOICE Recived');
+    // console.log('VOICE Recived');
     return <VoiceMessageReceived />;
   } else if (item?.messageStatus === 'SENT' && item?.messageType === 'TEXT') {
-    console.log('Text SENT');
+    // console.log('Text SENT');
     return <ChatBubbleSent />;
   } else if (item?.messageStatus === 'SENT' && item?.messageType === 'VOICE') {
-    console.log('VOICE SENT');
+    // console.log('VOICE SENT');
     return <VoiceMessageSent />;
   } else
     console.log(
@@ -49,6 +62,17 @@ const render = ({item, index}) => {
 const ChatScreen = ({navigation, route}) => {
   // console.log('Route--ChatScreen----------> ', route);
   const [messages, setMessages] = useState(dummyMessages);
+  const chatEnd = React.useRef(null);
+  // audio states
+  const [isLoggingIn, setisLoggingIn] = useState(false);
+  const [recordSecs, setrecordSecs] = useState(0);
+  const [recordTime, setrecordTime] = useState('00:00:00');
+  const [currentPositionSec, setcurrentPositionSec] = useState(0);
+  const [currentDurationSec, setcurrentDurationSec] = useState(0);
+  const [playTime, setplayTime] = useState('00:00:00');
+  const [duration, setduration] = useState('00:00:00');
+  // end audio states
+
   const sendMessage = () => {
     setMessages([
       ...messages,
@@ -64,6 +88,84 @@ const ChatScreen = ({navigation, route}) => {
   const receiveMessage = () => {
     console.log('Recieve Message');
   };
+
+  const onStartRecord = async () => {
+    // define audio name and extension
+    // const path = 'hello.m4a';
+    // const path = 'sound.mp4';
+    // const dirs = RNFetchBlob.fs.dirs;
+    // const path = Platform.select({
+    //   ios: 'hello.m4a',
+    //   android: `${caches}/sound.mp4`,
+    // });
+    // const path = 'sound.mp4';
+
+    // everytime error when used path
+    const audioSet = {
+      AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
+      AudioSourceAndroid: AudioSourceAndroidType.MIC,
+      AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
+      AVNumberOfChannelsKeyIOS: 2,
+      AVFormatIDKeyIOS: AVEncodingOption.aac,
+    };
+    console.log('audioSet', audioSet);
+    // set path
+    // const uri = await audioRecorderPlayer.startRecorder(path, audioSet);
+
+    const result = await audioRecorderPlayer.startRecorder();
+    // const result = await audioRecorderPlayer.startRecorder(null, audioSet);
+    console.log(
+      'Results========================> ',
+      result,
+      ' <====================',
+    );
+    audioRecorderPlayer.addRecordBackListener(e => {
+      setrecordSecs(e.currentPosition);
+      setrecordTime(audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)));
+      console.log(
+        'recordTime====> ',
+        audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)),
+      );
+      return;
+    });
+    console.log(result);
+  };
+  const onStopRecord = async () => {
+    const result = await audioRecorderPlayer.stopRecorder();
+    audioRecorderPlayer.removeRecordBackListener();
+    setrecordSecs(0);
+    console.log(result);
+  };
+  const onStartPlay = async e => {
+    console.log('onStartPlay');
+    // const path = 'hello.m4a';
+    // const path = 'sound.mp4';
+    // const msg = await audioRecorderPlayer.startPlayer(path);
+    const msg = await audioRecorderPlayer.startPlayer();
+    console.log('Start----MSG---->', msg);
+    audioRecorderPlayer.setVolume(1.0);
+    // console.log(msg);
+    audioRecorderPlayer.addPlayBackListener(e => {
+      if (e.currentPosition === e.duration) {
+        console.log('finished');
+        audioRecorderPlayer.stopPlayer();
+      }
+
+      setcurrentDurationSec(e.currentPosition);
+      setcurrentDurationSec(e.duration);
+      setplayTime(audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)));
+      setduration(audioRecorderPlayer.mmssss(Math.floor(e.duration)));
+    });
+  };
+  const onStopPlay = async e => {
+    console.log('onStopPlay');
+    audioRecorderPlayer.stopPlayer();
+    audioRecorderPlayer.removePlayBackListener();
+    Alert.alert('Recording!', 'Recoring Stoped!');
+  };
+
+  // end audio setup
+
   return (
     <View style={[theStyle.flex]}>
       <View info="1. chat display" style={[styles.chatArea]}>
@@ -71,14 +173,47 @@ const ChatScreen = ({navigation, route}) => {
           data={messages}
           // renderItem={({item, index}) => console.log('Hello messages')}
           renderItem={render}
+          onScrollEndDrag={e => {
+            e.currentTarget;
+          }}
+          ref={chatEnd}
+          onContentSizeChange={(w, h) => {
+            chatEnd.current.scrollToEnd({animating: true});
+          }}
         />
 
         <View info="Gifted Chat">{/* <GiftedChatUI /> */}</View>
       </View>
       {/* end 1 */}
-
+      <TouchableOpacity
+        onPress={onStartPlay}
+        style={{
+          margin: 10,
+          width: 100,
+          padding: 10,
+          alignSelf: 'center',
+          backgroundColor: '#bde0fe50',
+          alignItems: 'center',
+          borderRadius: 50,
+        }}>
+        <Text>Play Recording</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={onStopPlay}
+        style={{
+          margin: 10,
+          width: 100,
+          padding: 10,
+          alignSelf: 'center',
+          backgroundColor: '#bde0fe50',
+          alignItems: 'center',
+          borderRadius: 50,
+        }}>
+        <Text>Stop Recording</Text>
+      </TouchableOpacity>
       <View info="2. operation section" style={[styles.opArea]}>
         {/* <View info="input"> */}
+
         <TextInput
           placeholder="Write Message"
           multiline={true}
@@ -90,45 +225,15 @@ const ChatScreen = ({navigation, route}) => {
           <TouchableOpacity
             info="send button"
             onPress={sendMessage}
-            style={{
-              width: 40,
-              height: 40,
-              //   backgroundColor: 'red',
-              aspectRatio: 1 / 1,
-              borderRadius: 50,
-              padding: 5,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              source={send}
-              style={{
-                width: 30,
-                height: 30,
-                aspectRatio: 1 / 1,
-              }}
-            />
+            style={styles.iconButton}>
+            <Image source={send} style={styles.iconImg} />
           </TouchableOpacity>
           <TouchableOpacity
             info="microphone"
-            style={{
-              width: 40,
-              height: 40,
-              //   backgroundColor: 'red',
-              aspectRatio: 1 / 1,
-              borderRadius: 50,
-              padding: 5,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              source={microphone}
-              style={{
-                width: 30,
-                height: 30,
-                aspectRatio: 1 / 1,
-              }}
-            />
+            onPressIn={onStartRecord}
+            onPressOut={onStopRecord}
+            style={styles.iconButton}>
+            <Image source={microphone} style={styles.iconImg} />
           </TouchableOpacity>
         </View>
       </View>
@@ -165,6 +270,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  iconButton: {
+    width: 40,
+    height: 40,
+    aspectRatio: 1 / 1,
+    borderRadius: 50,
+    padding: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconImg: {width: 30, height: 30, aspectRatio: 1 / 1},
   send: {backgroundColor: '#bde0fe', borderRadius: 50, marginHorizontal: 5},
   sendIcon: {},
 });

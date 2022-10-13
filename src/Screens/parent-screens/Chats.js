@@ -11,7 +11,7 @@ import {AskAudioPermissions} from '../../utils/AudioPermissions';
 AskAudioPermissions();
 const Chats = ({navigation, route}) => {
   // console.log('Chats-----Navigation ===========> ', navigation);
-  console.log('Route--Child>Chats===========> ', route);
+  // console.log('Route--Child>Chats===========> ', route);
   const [chatList, setChatList] = useState(chat);
   // const [render, setRender] = useState('hello');
   useEffect(() => {

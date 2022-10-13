@@ -13,9 +13,5 @@ if (settings.hasProperty("newArchEnabled") && settings.newArchEnabled == "true")
     include (':react-native-audio-recorder-player')
     project(':react-native-audio-recorder-player').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-audio-recorder-player/android')
     // end asad voice recorder
-    // asad react-native-audio
-    include ':react-native-audio'
-    project(':react-native-audio').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-audio/android')
-    // end asad react-native-audio
 
 }

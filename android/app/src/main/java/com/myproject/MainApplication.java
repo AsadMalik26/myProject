@@ -3,10 +3,6 @@ package com.myproject;
 // asad voice recorder
 import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage;
 // end asad voice recorder
-// asad react-native-audio
-import com.rnim.rn.audio.ReactNativeAudioPackage; // <-- New 
-// end asad react-native-audio
-
 
 import android.app.Application;
 import android.content.Context;
@@ -38,10 +34,6 @@ public class MainApplication extends Application implements ReactApplication {
           // asad voice recorder
           // packages.add(new RNAudioRecorderPlayerPackage());
           // end asad voice recorder
-
-          // asad react-native-audio
-          packages.add(new ReactNativeAudioPackage());
-          // end asad react-native-audio
 
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());

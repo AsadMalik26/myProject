@@ -253,10 +253,6 @@ dependencies {
     // compile project(':react-native-audio-recorder-player')
     implementation project(':react-native-audio-recorder-player')
     // end asad voice recorder
-     // asad react-native-audio
-    // compile project(':react-native-audio')
-    implementation project(':react-native-audio')
-    // end asad react-native-audio
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion

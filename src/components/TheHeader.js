@@ -2,12 +2,12 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {theStyle} from '../stylesheets/Stylesheet';
 
-const TheHeader = () => {
+const TheHeader = ({title}) => {
   return (
     <View style={[styles.flex, styles.space, styles.header]}>
       {/* heading */}
       <View style={[theStyle.padding]}>
-        <Text style={theStyle.h3}>Chat app Design</Text>
+        <Text style={theStyle.h3}>{title}</Text>
       </View>
       {/* icons */}
       <View style={[theStyle.padding, styles.flex, styles.center]}>

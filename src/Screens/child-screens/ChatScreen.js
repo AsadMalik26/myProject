@@ -31,12 +31,13 @@ import AudioRecorderPlayer, {
   AVEncodingOption,
   OutputFormatAndroidType,
 } from 'react-native-audio-recorder-player';
+import TheHeader from '../../components/TheHeader';
 const audioRecorderPlayer = new AudioRecorderPlayer();
 audioRecorderPlayer.setSubscriptionDuration(0.09);
 // everytime error when path used for recording
 
 const ChatScreen = ({navigation, route}) => {
-  // console.log('Route--ChatScreen----------> ', route);
+  console.log('Route--ChatScreen----------> ', route);
   const [messages, setMessages] = useState(dummyMessages);
   const [myMsg, setmyMsg] = useState('');
   const [isPlaying, setisPlaying] = useState(false);
@@ -199,6 +200,7 @@ const ChatScreen = ({navigation, route}) => {
 
   return (
     <View style={[theStyle.flex]}>
+      {/* <TheHeader title={route.params.name} /> */}
       <View info="1. chat display" style={[styles.chatArea]}>
         <FlatList
           data={messages}
@@ -216,32 +218,6 @@ const ChatScreen = ({navigation, route}) => {
         <View info="Gifted Chat">{/* <GiftedChatUI /> */}</View>
       </View>
       {/* end 1 */}
-      {/* <TouchableOpacity
-        onPress={onStartPlay}
-        style={{
-          margin: 10,
-          width: 100,
-          padding: 10,
-          alignSelf: 'center',
-          backgroundColor: '#bde0fe50',
-          alignItems: 'center',
-          borderRadius: 50,
-        }}>
-        <Text>Play Recording</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={onStopPlay}
-        style={{
-          margin: 10,
-          width: 100,
-          padding: 10,
-          alignSelf: 'center',
-          backgroundColor: '#bde0fe50',
-          alignItems: 'center',
-          borderRadius: 50,
-        }}>
-        <Text>Stop Recording</Text>
-       </TouchableOpacity> */}
 
       <View info="2. operation section" style={[styles.opArea]}>
         {/* <View info="input"> */}

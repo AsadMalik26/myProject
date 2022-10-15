@@ -6,7 +6,7 @@ const ChatCard = ({name, message, count, navigation}) => {
   // console.log('navigation==========> ', navigation);
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('testChat', {name: name})}
+      onPress={() => navigation.navigate('ChatScreen', {name: name})}
       style={[theStyle.padding, theStyle.flexRow]}>
       {/* picture */}
       <Image

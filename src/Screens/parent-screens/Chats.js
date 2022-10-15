@@ -8,6 +8,7 @@ state = true;
 const Stack = createStackNavigator();
 
 import {AskAudioPermissions} from '../../utils/AudioPermissions';
+import TheHeader from '../../components/TheHeader';
 AskAudioPermissions();
 const Chats = ({navigation, route}) => {
   // console.log('Chats-----Navigation ===========> ', navigation);
@@ -15,13 +16,14 @@ const Chats = ({navigation, route}) => {
   const [chatList, setChatList] = useState(chat);
   // const [render, setRender] = useState('hello');
   useEffect(() => {
-    // console.log('Render State =======> ', render);
+    console.log('Render State =======> ');
     // setRender('world');
     // abc [erform re rendering]
   }, ['abc']);
   return (
     // <Stack.Navigator>
     <View style={[theStyle.flex]}>
+      <TheHeader title="Chats" />
       <FlatList
         data={chatList}
         renderItem={({item, index}) => (

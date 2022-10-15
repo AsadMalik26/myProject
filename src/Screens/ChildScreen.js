@@ -1,29 +1,38 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import Status from './parent-screens/Status';
+import Calls from './parent-screens/Calls';
+import Camera from './parent-screens/Camera';
 import Chats from './parent-screens/Chats';
-import ChatScreen from './child-screens/ChatScreen';
-const Stack = createStackNavigator();
-function Test({navigation}) {
-  <View style={{backgroundColor: 'red', flex: 1}}>
-    <Text>ChildScreen</Text>
-  </View>;
-}
-const ChildScreen = ({navigation, route}) => {
-  // console.log('Route Child-Screen=============> ', route);
+import SettingsScreen from './parent-screens/SettingsScreen';
+import {GiftedChatUI} from './gifted-chat/GiftedChatUI';
+const Tab = createMaterialTopTabNavigator();
+
+const ChildScreen = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: true}}>
-      <Stack.Screen
-        name="test"
-        component={Chats}
-        options={{title: 'Hello nesting', headerShown: false}}
-      />
-      <Stack.Screen
-        name="testChat"
-        component={ChatScreen}
-        options={{title: route?.params?.name}}
-      />
-    </Stack.Navigator>
+    <Tab.Navigator
+      initialRouteName="Chats"
+      backBehavior="initialRoute"
+      tabBarPosition="bottom"
+      // orientation="vertical"
+      screenOptions={{
+        //   tabBarShowIcon: true,
+        tabBarLabelStyle: {fontSize: 10},
+      }}>
+      <Tab.Screen name="Camera" component={Camera} />
+      <Tab.Screen name="Chats" component={Chats} />
+      <Tab.Screen name="Status" component={Status} />
+      <Tab.Screen name="Calls" component={Calls} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="Gift" component={GiftedChatUI} />
+      {/* <Tab.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{title: 'Chat'}}
+        /> */}
+      {/* <Tab.Screen name="testing" component={ChildScreen} /> */}
+    </Tab.Navigator>
   );
 };
 

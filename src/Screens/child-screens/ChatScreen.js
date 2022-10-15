@@ -35,33 +35,11 @@ const audioRecorderPlayer = new AudioRecorderPlayer();
 audioRecorderPlayer.setSubscriptionDuration(0.09);
 // everytime error when path used for recording
 
-const render = ({item, index}) => {
-  if (item?.messageStatus === 'RECEIVED' && item?.messageType === 'TEXT') {
-    // console.log('Text Recived');
-    return <ChatBubbleReceived />;
-  } else if (
-    item?.messageStatus === 'RECEIVED' &&
-    item?.messageType === 'VOICE'
-  ) {
-    // console.log('VOICE Recived');
-    return <VoiceMessageReceived />;
-  } else if (item?.messageStatus === 'SENT' && item?.messageType === 'TEXT') {
-    // console.log('Text SENT');
-    return <ChatBubbleSent />;
-  } else if (item?.messageStatus === 'SENT' && item?.messageType === 'VOICE') {
-    // console.log('VOICE SENT');
-    return <VoiceMessageSent />;
-  } else
-    console.log(
-      'Case not handled mate',
-      item?.messageStatus,
-      item?.messageType,
-    );
-};
-
 const ChatScreen = ({navigation, route}) => {
   // console.log('Route--ChatScreen----------> ', route);
   const [messages, setMessages] = useState(dummyMessages);
+  const [myMsg, setmyMsg] = useState('');
+  const [isPlaying, setisPlaying] = useState(false);
   const chatEnd = React.useRef(null);
   // audio states
   const [isLoggingIn, setisLoggingIn] = useState(false);
@@ -73,20 +51,31 @@ const ChatScreen = ({navigation, route}) => {
   const [duration, setduration] = useState('00:00:00');
   // end audio states
 
-  const sendMessage = () => {
+  const sendMessage = msg => {
+    if (msg) {
+      setMessages([
+        ...messages,
+        {
+          messageStatus: 'SENT',
+          messageType: 'TEXT',
+          message: msg,
+        },
+      ]);
+      console.log('Send Message');
+    }
+  };
+  const receiveMessage = () => {
+    console.log('Recieve Message');
+  };
+  const sendVoice = () => {
     setMessages([
       ...messages,
       {
         messageStatus: 'SENT',
-        messageType: 'TEXT',
-        messages:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque porro idobcaecati, dolorem laudantium cupiditate incidunt,',
+        messageType: 'VOICE',
       },
     ]);
-    console.log('Send Message');
-  };
-  const receiveMessage = () => {
-    console.log('Recieve Message');
+    console.log('Send Voice Message');
   };
 
   const onStartRecord = async () => {
@@ -132,6 +121,7 @@ const ChatScreen = ({navigation, route}) => {
   };
   const onStopRecord = async () => {
     const result = await audioRecorderPlayer.stopRecorder();
+    sendVoice();
     audioRecorderPlayer.removeRecordBackListener();
     setrecordSecs(0);
     console.log(result);
@@ -156,6 +146,7 @@ const ChatScreen = ({navigation, route}) => {
       setplayTime(audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)));
       setduration(audioRecorderPlayer.mmssss(Math.floor(e.duration)));
     });
+    setisPlaying(!isPlaying);
   };
   const onStopPlay = async e => {
     console.log('onStopPlay');
@@ -165,6 +156,46 @@ const ChatScreen = ({navigation, route}) => {
   };
 
   // end audio setup
+  const render = ({item, index}) => {
+    if (item?.messageStatus === 'RECEIVED' && item?.messageType === 'TEXT') {
+      // console.log('Text Recived');
+      return <ChatBubbleReceived message={item.message} />;
+    } else if (
+      item?.messageStatus === 'RECEIVED' &&
+      item?.messageType === 'VOICE'
+    ) {
+      // console.log('VOICE Recived');
+      return (
+        <VoiceMessageReceived
+          isPlaying={isPlaying}
+          setisPlaying={setisPlaying}
+          playable={onStartPlay}
+          stopPlayer={onStartPlay}
+        />
+      );
+    } else if (item?.messageStatus === 'SENT' && item?.messageType === 'TEXT') {
+      // console.log('Text SENT');
+      return <ChatBubbleSent message={item.message} />;
+    } else if (
+      item?.messageStatus === 'SENT' &&
+      item?.messageType === 'VOICE'
+    ) {
+      // console.log('VOICE SENT');
+      return (
+        <VoiceMessageSent
+          isPlaying={isPlaying}
+          setisPlaying={setisPlaying}
+          playable={onStartPlay}
+          stopPlayer={onStartPlay}
+        />
+      );
+    } else
+      console.log(
+        'Case not handled mate',
+        item?.messageStatus,
+        item?.messageType,
+      );
+  };
 
   return (
     <View style={[theStyle.flex]}>
@@ -185,7 +216,7 @@ const ChatScreen = ({navigation, route}) => {
         <View info="Gifted Chat">{/* <GiftedChatUI /> */}</View>
       </View>
       {/* end 1 */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={onStartPlay}
         style={{
           margin: 10,
@@ -210,28 +241,38 @@ const ChatScreen = ({navigation, route}) => {
           borderRadius: 50,
         }}>
         <Text>Stop Recording</Text>
-      </TouchableOpacity>
+       </TouchableOpacity> */}
+
       <View info="2. operation section" style={[styles.opArea]}>
         {/* <View info="input"> */}
 
         <TextInput
           placeholder="Write Message"
+          value={myMsg}
           multiline={true}
           numberOfLines={2}
+          onChangeText={text => {
+            setmyMsg(text);
+          }}
           style={[styles.input]}
         />
         {/* </View> */}
         <View info="buttons" style={[styles.button, styles.send]}>
           <TouchableOpacity
             info="send button"
-            onPress={sendMessage}
+            onPress={() => {
+              sendMessage(myMsg);
+              setmyMsg('');
+            }}
             style={styles.iconButton}>
             <Image source={send} style={styles.iconImg} />
           </TouchableOpacity>
           <TouchableOpacity
             info="microphone"
             onPressIn={onStartRecord}
-            onPressOut={onStopRecord}
+            onPressOut={() => {
+              onStopRecord();
+            }}
             style={styles.iconButton}>
             <Image source={microphone} style={styles.iconImg} />
           </TouchableOpacity>

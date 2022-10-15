@@ -1,12 +1,30 @@
-import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import pic from '../../../../assets/images/sample-dp.jpg';
 import play from '../../../../assets/images/play-fill.png';
-const VoiceMessageReceived = () => {
+import pause from '../../../../assets/images/pause.webp';
+
+const VoiceMessageReceived = ({
+  isPlaying,
+  setisPlaying,
+  playable,
+  stopPlayer,
+}) => {
+  // const [isPlaying, setisPlaying] = useState(false);
   return (
     <View info="voice box" style={[styles.voice, styles.receved]}>
       <Image source={pic} style={styles.img} />
-      <Image source={play} style={styles.voicePlayButton} />
+      <TouchableOpacity
+        onPress={() => {
+          if (isPlaying) stopPlayer();
+          setisPlaying(!isPlaying);
+          playable();
+        }}>
+        <Image
+          source={isPlaying ? pause : play}
+          style={styles.voicePlayButton}
+        />
+      </TouchableOpacity>
       <View info="voice-timeline" style={styles.voiceTimeline}>
         <View info="playing-tip" style={styles.playingTip}></View>
       </View>

@@ -5,10 +5,7 @@ const ChatBubbleReceived = ({senderName = 'Sender Name', message}) => {
   return (
     <View info="1.1 Bubble received" style={[styles.bubble, styles.received]}>
       <Text style={styles.senderName}>{senderName}</Text>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque porro id
-        obcaecati, dolorem laudantium cupiditate incidunt,
-      </Text>
+      <Text>{message}</Text>
       <View info="reciver tip" style={[styles.receiveTip, {}]}></View>
     </View>
   );

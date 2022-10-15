@@ -1,13 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const ChatBubbleSent = () => {
+const ChatBubbleSent = ({message = 'Lorem ipsum dolor'}) => {
   return (
     <View info="1.2 Bubble sent" style={[styles.bubble, styles.sent]}>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque porro id
-        obcaecati, dolorem laudantium cupiditate incidunt,
-      </Text>
+      <Text>{message}</Text>
       <View info="sent tip" style={[styles.sentTip, {}]}></View>
     </View>
   );
@@ -17,8 +14,10 @@ export default ChatBubbleSent;
 
 const styles = StyleSheet.create({
   bubble: {
-    width: '70%',
-    marginTop: 5,
+    maxWidth: '70%',
+    minWidth: '20%',
+    marginTop: 3,
+    marginBottom: 3,
     padding: 5,
     borderRadius: 13,
 

@@ -3,7 +3,7 @@ export const chatData = [
     id: 1,
     username: 'Ali',
     type: 'receive',
-    messages: [
+    message: [
       {
         key: 1,
         message:
@@ -25,7 +25,7 @@ export const chatData = [
     id: 2,
     username: 'Imran',
     type: 'sender',
-    messages: [
+    message: [
       {
         key: 1,
         message:
@@ -40,13 +40,12 @@ export const dummyMessages = [
     messageStatus: 'RECEIVED',
     messageType: 'TEXT',
     senderName: 'Dummy user 1',
-    messages:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque porro idobcaecati, dolorem laudantium cupiditate incidunt,',
+    message: 'Lorem ipsum laudantium cupiditate incidunt,',
   },
   {
     messageStatus: 'SENT',
     messageType: 'TEXT',
-    messages:
+    message:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque porro idobcaecati, dolorem laudantium cupiditate incidunt,',
   },
   {

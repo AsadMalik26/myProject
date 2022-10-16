@@ -281,10 +281,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-
-    // asad fs
-    implementation project(':react-native-fs')
-    // end asad fs
 }
 
 if (isNewArchitectureEnabled()) {

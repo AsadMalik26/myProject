@@ -1,6 +1,5 @@
 package com.myproject;
 
-
 // asad voice recorder
 import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage;
 // end asad voice recorder
@@ -17,10 +16,6 @@ import com.facebook.soloader.SoLoader;
 import com.myproject.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
-// asad fa
-import com.rnfs.RNFSPackage; // <------- add package
-//end asad fa
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -39,9 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
           // asad voice recorder
           // packages.add(new RNAudioRecorderPlayerPackage());
           // end asad voice recorder
-          // asad fs
-          packages.add(new new RNFSPackage());
-          // end asad fs
+
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;

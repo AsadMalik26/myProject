@@ -1,27 +1,93 @@
 import {
+  AsyncStorage,
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {theStyle} from '../../stylesheets/Stylesheet';
 import {HeadingSignIn} from './utils/SignInUtils';
 import TheButton from '../../utils/TheButton';
 
 const SignUpScreen = ({navigation}) => {
+  const [user, setUser] = useState({});
+  const [fName, setFName] = useState('');
+  const [lName, setLName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <View style={[theStyle.flex, styles.body]}>
       <HeadingSignIn title={'Sign Up'} />
       <View info="text fields" style={[theStyle.center]}>
-        <TextInput placeholder="First Name" style={styles.input} />
-        <TextInput placeholder="Last Name" style={styles.input} />
-        <TextInput placeholder="Email" style={styles.input} />
-        <TextInput placeholder="Password" style={styles.input} />
+        <TextInput
+          placeholder="First Name"
+          value={fName}
+          onChangeText={text => {
+            setFName(text);
+          }}
+          keyboardType={'default'}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Last Name"
+          value={lName}
+          onChangeText={text => {
+            setLName(text);
+          }}
+          keyboardType={'default'}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={text => {
+            setEmail(text);
+          }}
+          keyboardType={'email-address'}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={text => {
+            setPassword(text);
+          }}
+          secureTextEntry={true}
+          style={styles.input}
+        />
       </View>
       <View info="buttons">
-        <TheButton title={'Submit'} />
+        <TheButton
+          title={'Submit'}
+          onPress={() => {
+            let reg = {
+              fName: fName,
+              lName: lName,
+              email: email,
+              password: password,
+            };
+            setUser(reg);
+            AsyncStorage.setItem('user', JSON.stringify(user))
+              .then(() => {
+                ToastAndroid.showWithGravity(
+                  `User Registered ${reg.fName}`,
+                  ToastAndroid.LONG,
+                  ToastAndroid.BOTTOM,
+                );
+                global.setAuth.setIsAuth(true);
+              })
+              .catch(err => {
+                ToastAndroid.showWithGravity(
+                  `Error User Registered ${err}`,
+                  ToastAndroid.LONG,
+                  ToastAndroid.BOTTOM,
+                );
+              });
+          }}
+        />
       </View>
       <View info="links">
         <View style={styles.sign}>

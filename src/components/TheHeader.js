@@ -1,6 +1,17 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  AsyncStorage,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {theStyle} from '../stylesheets/Stylesheet';
+
+const logout = () => {
+  global.setAuth.setIsAuth(false);
+};
 
 const TheHeader = ({title}) => {
   return (
@@ -11,6 +22,9 @@ const TheHeader = ({title}) => {
       </View>
       {/* icons */}
       <View style={[theStyle.padding, styles.flex, styles.center]}>
+        <TouchableOpacity onPress={logout}>
+          <Text style={[theStyle.padding]}>Logout</Text>
+        </TouchableOpacity>
         <Text style={[theStyle.padding]}>ICON 1</Text>
         <Text style={[theStyle.padding]}>ICON 2</Text>
       </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import ParentScreen from './src/Screens/ParentScreen';
-
+global.setAuth = {};
 const App = () => {
   return (
     <View style={{flex: 1}}>

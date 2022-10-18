@@ -1,25 +1,97 @@
 import {
+  AsyncStorage,
+  BackHandler,
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {theStyle} from '../../stylesheets/Stylesheet';
 import TheButton from '../../utils/TheButton';
 import {HeadingSignIn} from './utils/SignInUtils';
 
 const SignInScreen = ({navigation}) => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  const getUser = () => {
+    AsyncStorage.getItem('user')
+      .then(res => {
+        res = JSON.parse(res);
+        console.log('is User? ', res);
+        if (email == res.email && password == res.password) {
+          console.log('Sign in=====> get user======>', res.email, res.password);
+          ToastAndroid.showWithGravity(
+            `User Signed In`,
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+          );
+          global.setAuth.setIsAuth(true);
+        } else
+          console.log(
+            'else Sign in=====> get user======>',
+            email,
+            res.email,
+            password,
+            res.password,
+          );
+      })
+      .catch(error => {
+        console.log('Sign in=====> get user error======>', error);
+        ToastAndroid.showWithGravity(
+          `User Doesn't Exist`,
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+        );
+        navigation.navigate('SignUpScreen');
+      });
+  };
+  // useEffect(() => {
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     function () {
+  //       console.log('Exit App - Screen: Signin');
+  //       BackHandler.exitApp();
+  //       return true;
+  //     },
+  //   );
+  //   console.log('Exit Event added on Pressed back button');
+  //   return () =>
+  //     BackHandler.removeEventListener('hardwareBackPress', function () {});
+  // }, []);
+  // useFocusEffect(() => {
+  //   BackHandler.exitApp();
+  // }, [BackHandler]);
   return (
     <View style={[theStyle.flex, styles.body]}>
       <HeadingSignIn title={'Sign In'} />
       <View info="text fields" style={[theStyle.center]}>
-        <TextInput placeholder="Email" style={styles.input} />
-        <TextInput placeholder="Password" style={styles.input} />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={text => {
+            setEmail(text);
+            console.log(text);
+          }}
+          keyboardType={'email-address'}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={text => {
+            setPassword(text);
+            console.log(text);
+          }}
+          secureTextEntry={true}
+          style={styles.input}
+        />
       </View>
       <View info="buttons">
-        <TheButton title={'Submit'} />
+        <TheButton title={'Submit'} onPress={getUser} />
       </View>
       <View info="links">
         <View style={styles.sign}>

@@ -1,7 +1,7 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 const TheButton = ({title, onPress, style = {StyleSheet}}) => {
-  console.log(style);
+  // console.log(style);
   return (
     <View style={styles.body}>
       <TouchableOpacity style={styles.button} onPress={onPress}>

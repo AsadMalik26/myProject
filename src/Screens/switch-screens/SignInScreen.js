@@ -30,14 +30,20 @@ const SignInScreen = ({navigation}) => {
             ToastAndroid.BOTTOM,
           );
           global.setAuth.setIsAuth(true);
-        } else
-          console.log(
-            'else Sign in=====> get user======>',
-            email,
-            res.email,
-            password,
-            res.password,
+        } else {
+          ToastAndroid.showWithGravity(
+            `User Not Exist`,
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
           );
+        }
+        console.log(
+          'else Sign in=====> get user======>',
+          email,
+          res.email,
+          password,
+          res.password,
+        );
       })
       .catch(error => {
         console.log('Sign in=====> get user error======>', error);
@@ -49,19 +55,19 @@ const SignInScreen = ({navigation}) => {
         navigation.navigate('SignUpScreen');
       });
   };
-  // useEffect(() => {
-  //   const backHandler = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     function () {
-  //       console.log('Exit App - Screen: Signin');
-  //       BackHandler.exitApp();
-  //       return true;
-  //     },
-  //   );
-  //   console.log('Exit Event added on Pressed back button');
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', function () {});
-  // }, []);
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      function () {
+        console.log('Exit App - Screen: Signin');
+        BackHandler.exitApp();
+        return true;
+      },
+    );
+    console.log('Exit Event added on Pressed back button');
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', function () {});
+  }, []);
   // useFocusEffect(() => {
   //   BackHandler.exitApp();
   // }, [BackHandler]);

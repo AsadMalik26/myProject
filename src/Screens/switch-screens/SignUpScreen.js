@@ -70,7 +70,7 @@ const SignUpScreen = ({navigation}) => {
               password: password,
             };
             setUser(reg);
-            AsyncStorage.setItem('user', JSON.stringify(user))
+            AsyncStorage.setItem('user', JSON.stringify(reg))
               .then(() => {
                 ToastAndroid.showWithGravity(
                   `User Registered ${reg.fName}`,

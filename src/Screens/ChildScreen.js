@@ -9,6 +9,7 @@ import SettingsScreen from './parent-screens/SettingsScreen';
 import {GiftedChatUI} from './gifted-chat/GiftedChatUI';
 import FirebaseTestScreen from './parent-screens/firebase-test/FirebaseTestScreen';
 import Fetch from './parent-screens/firebase-test/Fetch';
+import MRM from './parent-screens/mrm/MRM';
 const Tab = createMaterialTopTabNavigator();
 
 const ChildScreen = () => {
@@ -29,7 +30,8 @@ const ChildScreen = () => {
       <Tab.Screen name="Settings" component={SettingsScreen} />
       <Tab.Screen name="Gift" component={GiftedChatUI} />
       {/* <Tab.Screen name="FirebaseTestScreen" component={FirebaseTestScreen} /> */}
-      <Tab.Screen name="FirebaseFetch" component={Fetch} />
+      <Tab.Screen name="FBase" component={Fetch} />
+      <Tab.Screen name="MRM" component={MRM} />
       {/* <Tab.Screen
           name="ChatScreen"
           component={ChatScreen}

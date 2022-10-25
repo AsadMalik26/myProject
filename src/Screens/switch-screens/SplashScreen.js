@@ -7,6 +7,9 @@ import {
   Text,
   View,
 } from 'react-native';
+import {MMKV} from 'react-native-mmkv';
+export const storage = new MMKV();
+storage.set('user.name', 'asad');
 
 import bg from '../../../assets/images/splash.jpeg';
 import {StackActions} from '@react-navigation/native';
@@ -29,7 +32,11 @@ export default function SplashScreen(props) {
         console.log('1. get user error======>', error);
       });
   };
-  useEffect(getUser, [props.navigation]);
+  const getUserMMKV = (email, password) => {
+    console.log(storage.getString('user.name'));
+  };
+  // useEffect(getUser, [props.navigation]);
+  useEffect(getUserMMKV, [props.navigation]);
   return (
     <View style={{flex: 1, backgroundColor: 'red'}}>
       {/* <ImageBackground source={bg} /> */}

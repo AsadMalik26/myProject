@@ -254,7 +254,10 @@ dependencies {
     implementation project(':react-native-audio-recorder-player')
     // end asad voice recorder
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
+    // MMKV
+     implementation 'com.tencent:mmkv:1.2.14'
+    // replace "1.2.14" with any available version
+    // end MMKV
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

@@ -23,7 +23,7 @@ const ParentScreen = ({navigation, route}) => {
         screenOptions={{headerShown: true}}
         // initialRouteName="Chats"
         initialRouteName="SplashScreen">
-        {!true ? (
+        {!isAuth ? (
           <>
             <Stack.Group
               //  navigationKey={false}
